@@ -5,7 +5,6 @@
  * @Date         : 2026-01-13 16:04:19
  * @LastEditors  : chen
  * @LastEditTime : 2026-02-10 15:03:27
- * @FilePath     : \xingtie\src\views\dashboard\index.vue
  * Copyright (C) 2026 chen. All rights reserved.
 -->
 <template>

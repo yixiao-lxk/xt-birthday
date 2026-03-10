@@ -1,4 +1,4 @@
-# xingtie
+# xt-birthday
 
 ## Project setup
 ```

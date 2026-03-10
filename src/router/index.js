@@ -5,7 +5,6 @@
  * @Date         : 2026-01-13 15:27:58
  * @LastEditors  : chen
  * @LastEditTime : 2026-01-13 16:04:59
- * @FilePath     : \xingtie\src\router\index.js
  * Copyright (C) 2026 chen. All rights reserved.
  */
 import Vue from "vue";

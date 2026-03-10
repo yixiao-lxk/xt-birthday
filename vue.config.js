@@ -5,7 +5,6 @@
  * @Date         : 2026-01-13 15:27:58
  * @LastEditors  : chen
  * @LastEditTime : 2026-01-19 21:50:39
- * @FilePath     : \xingtie\vue.config.js
  * Copyright (C) 2026 chen. All rights reserved.
  */
 const { defineConfig } = require("@vue/cli-service");
