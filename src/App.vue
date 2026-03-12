@@ -13,9 +13,9 @@
   <RouterView />
 </template>
 
-<style scoped socped="less">
-div, p, span, i, em, img {
-  padding: 0px;
+<style>
+body,div, p, span, i, em, img {
+  padding: 0;
   margin: 0px;
 }
 </style>
