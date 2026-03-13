@@ -13,17 +13,23 @@
       <div class="group_box">
         <div class="group_item_box">
           <div class="group_body_box head">
-
+            <img src="@/assets/images/part/head.png" class="头" />
+            <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt=""刷新 />
+            <span class="refresh_count_view">123</span>
           </div>
         </div>
         <div class="group_item_box">
           <div class="group_body_box body">
-
+            <img src="@/assets/images/part/body.png" class="身体" />
+            <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt=""刷新 />
+            <span class="refresh_count_view">1</span>
           </div>
         </div>
         <div class="group_item_box">
           <div class="group_body_box weapon">
-
+            <img src="@/assets/images/part/weapon.png" class="武器" />
+            <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt=""刷新 />
+            <span class="refresh_count_view">2</span>
           </div>
         </div>
       </div>
@@ -99,6 +105,22 @@ export default {
         }
         &.weapon {
           background: url(@/assets/images/components/weapon_box_bg.png) no-repeat top center;
+        }
+        .refresh_btn {
+          position: absolute;
+          top: 62px;
+          right: 10px;
+          cursor: pointer;
+        }
+        .refresh_count_view {
+          position: absolute;
+          display: block;
+          bottom: 80px;
+          right: 10px;
+          width: 30px;
+          font-size: 16px;
+          font-weight: bold;
+          color: #2d3063;
         }
       }
     }
