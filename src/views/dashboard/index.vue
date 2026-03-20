@@ -14,37 +14,38 @@
         <div class="group_item_box">
           <div class="group_body_box head">
             <img src="@/assets/images/part/head.png" class="头" />
-            <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt=""刷新 />
+            <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt="刷新" />
             <span class="refresh_count_view">123</span>
           </div>
         </div>
         <div class="group_item_box">
           <div class="group_body_box body">
             <img src="@/assets/images/part/body.png" class="身体" />
-            <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt=""刷新 />
+            <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt="刷新" />
             <span class="refresh_count_view">1</span>
           </div>
         </div>
         <div class="group_item_box">
           <div class="group_body_box weapon">
             <img src="@/assets/images/part/weapon.png" class="武器" />
-            <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt=""刷新 />
+            <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt="刷新" />
             <span class="refresh_count_view">2</span>
           </div>
         </div>
       </div>
       <div class="bottom_btn_box">
-        <img src="@/assets/images/combine_wait_img.png" alt="">
+        <img src="@/assets/images/combine_wait_img.png" alt="" @click="showShareDialog">
       </div>
     </div>
+      <share ref="shareRef" @close="handleCloseShare" />
   </main>
 </template>
 
 <script>
-import { getActivityInfo } from "@/utils/api";
+import share from "./components/share.vue";
 
 export default {
-  name: "Dashboard",
+  name: "DashboardView",
   props: {
     config: {
       type: Object,
@@ -53,8 +54,11 @@ export default {
   },
   data() {
     return {
-
+      shareDialogVisible: false,
     };
+  },
+  components: {
+    share,
   },
   mounted() {
     // 监听可见性变化
@@ -71,6 +75,10 @@ export default {
     // 获取活动信息
     async getInfo() {
 
+    },
+    // 展示分享弹窗
+    showShareDialog() {
+      this.$refs.shareRef.showShare();
     },
   },
 };
