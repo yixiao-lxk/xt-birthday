@@ -25,7 +25,10 @@
               <img v-else :src="require(`@/assets/images/part/head-${components[0].image_id}.png`)" alt="头" />
             </div>
             <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt="刷新" />
-            <span class="refresh_count_view">123</span>
+            <span class="refresh_count_view">{{components[0].count}}</span>
+            <div class="buttonView">
+
+            </div>
           </div>
         </div>
         <div class="group_item_box">
@@ -42,7 +45,10 @@
               <img v-else :src="require(`@/assets/images/part/body-${components[1].image_id}.png`)" alt="身体" />
             </div>
             <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt="刷新" />
-            <span class="refresh_count_view">1</span>
+            <span class="refresh_count_view">{{components[1].count}}</span>
+            <div class="buttonView">
+
+            </div>
           </div>
         </div>
         <div class="group_item_box">
@@ -59,7 +65,10 @@
               <img v-else :src="require(`@/assets/images/part/weapon-${components[2].image_id}.png`)" alt="武器" />
             </div>
             <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt="刷新" />
-            <span class="refresh_count_view">2</span>
+            <span class="refresh_count_view">{{components[2].count}}</span>
+            <div class="buttonView">
+
+            </div>
           </div>
         </div>
       </div>
@@ -95,6 +104,7 @@ export default {
       activity_status: 0,
       components: [],
       combination: "",
+      user_nickname: "",
     };
   },
   components: {
@@ -124,11 +134,12 @@ export default {
       this.activity_status = res.activity_status;
       this.components = res.components;
       this.combination = res.components.map((item) => item.image_id).join("-"),
+      this.user_nickname = res.user_nickname,
       console.log("组合数据", this.combination);
     },
     // 展示分享弹窗
     showShareDialog() {
-      this.$refs.shareRef.showShare(this.combination);
+      this.$refs.shareRef.showShare(this.combination, this.user_nickname);
     },
     // 展示规则弹窗
     showRule() {
@@ -192,6 +203,15 @@ export default {
           font-size: 16px;
           font-weight: bold;
           color: #2d3063;
+        }
+        .buttonView {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 146px;
+          height: 79px;
+          background: #000;
+          opacity: 0.8;
         }
       }
     }

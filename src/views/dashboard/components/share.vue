@@ -15,7 +15,7 @@
           <div class="shareBox" :class="{'created': isShare}" id="shareBox">
             <img :src="robotImg" alt="机甲图片" class="robot_img">
             <img src="@/assets/images/share/cover.png" v-if="!isShare" alt="SSR盒子" class="ssr_box">
-            <p class="nicknameView" :class="{'created': isShare}">@XXX用户名用户名</p>
+            <p class="nicknameView" :class="{'created': isShare}">@{{nickname}}</p>
             <img src="@/assets/images/share/qrcode.png" v-if="isShare" alt="二维码" class="qrcode">
           </div>
           <div class="shareBtnBox" v-if="!isShare">
@@ -42,14 +42,16 @@ export default {
       robotImg: "",//机甲图片
       isShare: false, //是否分享
       base64Img: '', //分享图片base64
+      nickname: "", //用户昵称
     };
   },
   watch: {
   },
   methods: {
     //展示分享
-    showShare(data) {
-      this.robotImg = require(`@/assets/images/generate/${data}.png`);
+    showShare(combination, nickname) {
+      this.robotImg = require(`@/assets/images/generate/${combination}.png`);
+      this.nickname = nickname;
       this.visible = true;
     },
     //关闭分享
