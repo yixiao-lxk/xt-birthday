@@ -36,7 +36,7 @@ export default {
   name: "ShareModal",
   data() {
     return {
-      visible: true, //分享弹窗是否显示
+      visible: false, //分享弹窗是否显示
       robotImg: require('@/assets/images/share/robot.png'), //机甲图片
       isShare: false, //是否分享
     };
@@ -51,6 +51,7 @@ export default {
     //关闭分享
     closeShare() {
       this.visible = false;
+      this.isShare = false;
     },
   },
 };
