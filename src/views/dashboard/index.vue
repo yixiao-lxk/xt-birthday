@@ -64,15 +64,22 @@
         </div>
       </div>
       <div class="bottom_btn_box">
-        <img src="@/assets/images/combine_wait_img.png" alt="" @click="showShareDialog">
+        <img v-if="components.length > 0 && components[0].status == 1 && components[1].status == 1 && components[2].status == 1" src="@/assets/images/combine_img.png" alt="" @click="showShareDialog">
+        <img v-else src="@/assets/images/combine_wait_img.png" alt="">
       </div>
     </div>
+    <div class="ruleView">
+      <a href="javascript:void(0)" target="_blank">查看更多</a>
+      <a href="javascript:void(0)" @click="showRule">活动详细规则</a>
+    </div>
     <share ref="shareRef" @close="handleCloseShare" />
+    <rule ref="ruleRef"/>
   </main>
 </template>
 
 <script>
 import share from "./components/share.vue";
+import rule from "./components/rule.vue";
 import { getActivityInfo } from "@/utils/api";
 
 export default {
@@ -92,6 +99,7 @@ export default {
   },
   components: {
     share,
+    rule,
   },
   mounted() {
     this.getInfo();
@@ -121,6 +129,10 @@ export default {
     // 展示分享弹窗
     showShareDialog() {
       this.$refs.shareRef.showShare(this.combination);
+    },
+    // 展示规则弹窗
+    showRule() {
+      this.$refs.ruleRef.showRule();
     },
     // 关闭分享弹窗
     handleCloseShare() {
@@ -190,6 +202,20 @@ export default {
     >img {
       cursor: pointer;
     }
+  }
+}
+.ruleView {
+  width: 876px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+  >a {
+    font-size: 16px;
+    line-height: 50px;
+    font-weight: bold;
+    color: #fdf467;
+    cursor: pointer;
   }
 }
 </style>
