@@ -22,7 +22,7 @@
                 <img src="@/assets/images/components/unlocked_bg.png" alt="解锁背景" />
                 <img class="unlockedImg" src="@/assets/images/components/unlocked_video_1.png" alt="">
               </div>
-              <img v-else src="@/assets/images/part/head.png" alt="头" />
+              <img v-else :src="require(`@/assets/images/part/head-${components[0].image_id}.png`)" alt="头" />
             </div>
             <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt="刷新" />
             <span class="refresh_count_view">123</span>
@@ -39,7 +39,7 @@
                 <img src="@/assets/images/components/unlocked_bg.png" alt="解锁背景" />
                 <img class="unlockedImg" src="@/assets/images/components/unlocked_video_2.png" alt="">
               </div>
-              <img v-else src="@/assets/images/part/body.png" alt="身体" />
+              <img v-else :src="require(`@/assets/images/part/body-${components[1].image_id}.png`)" alt="身体" />
             </div>
             <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt="刷新" />
             <span class="refresh_count_view">1</span>
@@ -56,7 +56,7 @@
                 <img src="@/assets/images/components/unlocked_bg.png" alt="解锁背景" />
                 <img class="unlockedImg" src="@/assets/images/components/unlocked_video_3.png" alt="">
               </div>
-              <img v-else src="@/assets/images/part/weapon.png" alt="武器" />
+              <img v-else :src="require(`@/assets/images/part/weapon-${components[2].image_id}.png`)" alt="武器" />
             </div>
             <img class="refresh_btn" src="@/assets/images/components/refresh_btn.png" alt="刷新" />
             <span class="refresh_count_view">2</span>
@@ -85,9 +85,9 @@ export default {
   },
   data() {
     return {
-      shareDialogVisible: false,
       activity_status: 0,
       components: [],
+      combination: "",
     };
   },
   components: {
@@ -115,10 +115,12 @@ export default {
       console.log("活动信息", res);
       this.activity_status = res.activity_status;
       this.components = res.components;
+      this.combination = res.components.map((item) => item.image_id).join("-"),
+      console.log("组合数据", this.combination);
     },
     // 展示分享弹窗
     showShareDialog() {
-      this.$refs.shareRef.showShare();
+      this.$refs.shareRef.showShare(this.combination);
     },
     // 关闭分享弹窗
     handleCloseShare() {

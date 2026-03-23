@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       visible: false, //分享弹窗是否显示
-      robotImg: require('@/assets/images/share/robot.png'), //机甲图片
+      robotImg: "",//机甲图片
       isShare: false, //是否分享
       base64Img: '', //分享图片base64
     };
@@ -48,7 +48,8 @@ export default {
   },
   methods: {
     //展示分享
-    showShare() {
+    showShare(data) {
+      this.robotImg = require(`@/assets/images/generate/${data}.png`);
       this.visible = true;
     },
     //关闭分享
