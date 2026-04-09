@@ -33,6 +33,8 @@
 
 <script>
 import html2canvas from 'html2canvas';
+import { getNickname,uploadImage } from "@/utils/api";
+
 
 export default {
   name: "ShareModal",
@@ -44,15 +46,16 @@ export default {
       base64Img: '', //分享图片base64
       image_url: "", // 分享图片url
       nickname: "", //用户昵称
+      activityId: "", //活动id
     };
   },
   watch: {
   },
   methods: {
     //展示分享
-    showShare(combination, nickname) {
-      this.robotImg = require(`@/assets/images/generate/${combination}.png`);
-      this.nickname = nickname;
+    showShare(data) {
+      this.activityId = data.activity_id || "";
+      this.robotImg = data.poster_url || "";
       this.visible = true;
     },
     //关闭分享
@@ -63,6 +66,9 @@ export default {
     //生成图片
     async generateImg() {
       this.isShare = true;
+      // 获取用户昵称
+      const res = await getNickname();
+      this.nickname = res.name;
       await this.$nextTick();
       await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       if (document.fonts && document.fonts.ready) {
@@ -153,9 +159,45 @@ export default {
     //打开分享
     async openBilibiliShare() {
       const res = await this.uploadImage();
+      console.log(res);
       //调用分享方法
       this.share(res.image_url);
       this.closeShare();
+    },
+    // 上传分享图片
+    async uploadImage() {
+      try {
+        // 将base64图片转换为Blob对象
+        const blob = await this.base64ToBlob(this.base64Img);
+
+        // 创建FormData对象
+        const formData = new FormData();
+        formData.append("file", blob, "share_image.png");
+        formData.append("activity_id", this.activityId);
+
+        // 调用上传接口
+        const res = await uploadImage(formData);
+        return res;
+      } catch (error) {
+        console.error("上传失败:", error);
+        throw error;
+      }
+    },
+    // base64转Blob
+    base64ToBlob(base64) {
+      return new Promise((resolve) => {
+        const arr = base64.split(",");
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        resolve(new Blob([u8arr], { type: mime }));
+      });
     },
     //实际分享逻辑
     share(image_url) {
@@ -352,6 +394,7 @@ export default {
     color: #583fe2;
     font-size: 24px;
     font-weight: bold;
+    margin: 0;
     &.created {
       bottom: 260px;
       left: 220px;
