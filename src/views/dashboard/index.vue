@@ -75,10 +75,10 @@
           </div>
         </div>
       </div>
-      <div class="bottom_btn_box">
+      <div class="bottom_btn_box" v-if="components.length">
         <img v-if="components.every((item) => item.group_status == 2)" src="@/assets/images/combine_img.png" alt=""
           @click="showShareDialog">
-        <img v-else src="@/assets/images/combine_wait_img.png" alt="">
+        <img v-else class="disabled" src="@/assets/images/combine_wait_img.png" alt="">
       </div>
     </div>
     <share ref="shareRef" @close="handleCloseShare" />
@@ -126,9 +126,6 @@ export default {
       const res = await getActivityInfo({ activity_id });
       this.components = Array.isArray(res.groups) && res.groups.length ? res.groups : this.components;
       console.log("部件数据", res);
-      // this.combination = res.components.map((item) => item.image_id).join("-")
-      // this.user_nickname = res.user_nickname
-      // console.log("组合数据", this.combination);
     },
     // 展示分享弹窗
     async showShareDialog() {
@@ -246,6 +243,12 @@ export default {
 
     >img {
       cursor: pointer;
+    }
+    >img.disabled {
+      filter: grayscale(1);
+      opacity: 0.8;
+      cursor: not-allowed;
+      pointer-events: none;
     }
   }
 }
