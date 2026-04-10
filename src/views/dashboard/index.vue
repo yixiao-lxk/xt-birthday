@@ -17,11 +17,11 @@
               <img src="@/assets/images/components/unlocked_bg.png" alt="解锁背景" />
               <img class="unlockedImg" src="@/assets/images/components/unlocked_img_1.png" alt="">
             </div>
-            <div v-else-if="components[0] && components[0].group_status == 1">
+            <div v-if="components[0] && components[0].group_status == 1">
               <img src="@/assets/images/components/unlocked_bg.png" alt="解锁背景" />
               <img class="unlockedImg" src="@/assets/images/components/unlocked_video_1.png" alt="">
             </div>
-            <div v-else>
+            <div v-if="components[0] && components[0].group_status == 2">
               <img :src="(components[0] && components[0].image_url) || ''" alt="头" />
             </div>
             <img class="refresh_btn" @click.stop="refreshComponent(0)" src="@/assets/images/components/refresh_btn.png"
@@ -34,15 +34,15 @@
         </div>
         <div class="group_item_box">
           <div class="group_body_box body">
-            <div v-if="components[1].group_status == 0">
+            <div v-if="components[1] && components[1].group_status == 0">
               <img src="@/assets/images/components/unlocked_bg.png" alt="解锁背景" />
               <img class="unlockedImg" src="@/assets/images/components/unlocked_img_2.png" alt="">
             </div>
-            <div v-else-if="components[1] && components[1].group_status == 1">
+            <div v-if="components[1] && components[1].group_status == 1">
               <img src="@/assets/images/components/unlocked_bg.png" alt="解锁背景" />
               <img class="unlockedImg" src="@/assets/images/components/unlocked_video_2.png" alt="">
             </div>
-            <div v-else>
+            <div v-if="components[1] && components[1].group_status == 2">
               <img :src="(components[1] && components[1].image_url) || ''" alt="身体" />
             </div>
             <img class="refresh_btn" @click.stop="refreshComponent(1)" src="@/assets/images/components/refresh_btn.png"
@@ -55,15 +55,15 @@
         </div>
         <div class="group_item_box">
           <div class="group_body_box weapon">
-            <div v-if="components[2].group_status == 0">
+            <div v-if="components[2] && components[2].group_status == 0">
               <img src="@/assets/images/components/unlocked_bg.png" alt="解锁背景" />
               <img class="unlockedImg" src="@/assets/images/components/unlocked_img_3.png" alt="">
             </div>
-            <div v-else-if="components[2] && components[2].group_status == 1">
+            <div v-if="components[2] && components[2].group_status == 1">
               <img src="@/assets/images/components/unlocked_bg.png" alt="解锁背景" />
               <img class="unlockedImg" src="@/assets/images/components/unlocked_video_3.png" alt="">
             </div>
-            <div v-else>
+            <div v-if="components[2] && components[2].group_status == 2">
               <img :src="(components[2] && components[2].image_url) || ''" alt="武器" />
             </div>
             <img class="refresh_btn" @click.stop="refreshComponent(2)" src="@/assets/images/components/refresh_btn.png"
@@ -99,12 +99,7 @@ export default {
   },
   data() {
     return {
-      activity_status: 0,
-      components: [
-        { group_status: 0, image_url: "", remain_refresh_count: 0, status: 0, image_id: 1 },
-        { group_status: 0, image_url: "", remain_refresh_count: 0, status: 0, image_id: 1 },
-        { group_status: 0, image_url: "", remain_refresh_count: 0, status: 0, image_id: 1 },
-      ],
+      components: [],
     };
   },
   components: {
@@ -129,7 +124,6 @@ export default {
         config: { activity_id },
       } = this;
       const res = await getActivityInfo({ activity_id });
-      this.activity_status = res.activity_status;
       this.components = Array.isArray(res.groups) && res.groups.length ? res.groups : this.components;
       console.log("部件数据", res);
       // this.combination = res.components.map((item) => item.image_id).join("-")
@@ -159,13 +153,16 @@ export default {
       const {
         config: { activity_id },
       } = this;
+      if(this.components[index].remain_refresh_count == 0) {
+        this.$message.error(`暂无刷新次数，请先观看第${index+1}组视频1分钟获取刷新次数`);
+        return;
+      }
       const res = await refreshPart({ activity_id, group_id: this.components[index].group_id });
-      if (!this.components[index]) return;
-      if (res && res.image_url) this.components[index].image_url = res.image_url;
-      if (res && typeof res.remain_refresh_count === "number") {
+      if (res) {
+        this.components[index].image_url = res.image_url;
+        this.components[index].group_status = 2;
         this.components[index].remain_refresh_count = res.remain_refresh_count;
       }
-      this.combination = this.components.map((item) => item.image_id).join("-");
     },
   },
 };

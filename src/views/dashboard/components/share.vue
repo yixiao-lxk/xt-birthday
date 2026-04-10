@@ -53,7 +53,10 @@ export default {
   },
   methods: {
     //展示分享
-    showShare(data) {
+    async showShare(data) {
+      // 获取用户昵称
+      const res = await getNickname();
+      this.nickname = res.name;
       this.activityId = data.activity_id || "";
       this.robotImg = data.poster_url || "";
       this.visible = true;
@@ -66,9 +69,6 @@ export default {
     //生成图片
     async generateImg() {
       this.isShare = true;
-      // 获取用户昵称
-      const res = await getNickname();
-      this.nickname = res.name;
       await this.$nextTick();
       await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       if (document.fonts && document.fonts.ready) {
@@ -221,7 +221,7 @@ export default {
                 generic: {
                   type: "image", // (必需，包含'text', 'image')
                   title: "分享标题", // (必需)
-                  imageUrl: "图片链接", // (必需)
+                  imageUrl: image_url, // (必需)
                   text: "描述一下", // (必需)
                 },
                 dynamic: {
