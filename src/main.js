@@ -14,7 +14,7 @@ import store from "./store";
 import { Message, Dialog } from "element-ui";
 // 开发环境下引入mock
 // if (process.env.NODE_ENV === "development") {
-  require("./mock");
+  // require("./mock");
 // }
 Vue.config.productionTip = false;
 Vue.prototype.$message = Message;
