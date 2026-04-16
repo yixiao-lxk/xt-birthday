@@ -16,7 +16,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 // 开发环境下引入mock
 // if (process.env.NODE_ENV === "development") {
-  require("./mock");
+  // require("./mock");
 // }
 Vue.config.productionTip = false;
 Vue.prototype.$message = Message;
