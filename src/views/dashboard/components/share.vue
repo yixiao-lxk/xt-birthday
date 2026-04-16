@@ -303,6 +303,17 @@ export default {
 </script>
 
 <style lang="less">
+.el-dialog__wrapper:has(.shareDialog) {
+  position: fixed !important;
+  top:0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .el-dialog.shareDialog {
   position: absolute;
   left: 50%;
