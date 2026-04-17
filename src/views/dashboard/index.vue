@@ -88,6 +88,7 @@
 <script>
 import share from "./components/share.vue";
 import { getActivityInfo, refreshPart, mergeMecha } from "@/utils/api";
+import 'element-ui/lib/theme-chalk/message.css';
 
 export default {
   name: "DashboardView",
