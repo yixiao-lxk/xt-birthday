@@ -23,7 +23,7 @@
           </div>
           <div class="shareBtnBox created" v-else>
             <img @click.stop="saveImg" src="@/assets/images/share/save.png" alt="保存图片">
-            <img @click.stop="openBilibiliShare" src="@/assets/images/share/share.png" alt="分享">
+            <img @click="openBilibiliShare" src="@/assets/images/share/share.png" alt="分享">
           </div>
         </div>
       </div>
