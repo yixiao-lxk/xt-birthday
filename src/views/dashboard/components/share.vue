@@ -35,7 +35,7 @@
 <script>
 import html2canvas from 'html2canvas';
 import { getNickname,uploadImage } from "@/utils/api";
-// import biliSharePc from "@bilibili/share-pc";
+import biliSharePc from "@bilibili/share-pc";
 
 
 export default {
