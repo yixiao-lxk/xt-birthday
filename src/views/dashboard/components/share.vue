@@ -257,15 +257,17 @@ export default {
   margin: 0 !important;
 }
 
+/deep/ .bili-share-pc {
+  background-color: #ffffff;
+  width: 440px;
+}
+
 .shareWrapper {
   position: absolute;
   bottom: -100px;
   left: 50%;
   transform: translateX(-50%);
   width: 440px;
-  /deep/ .el-bili-share-pc {
-    width: auto !important;
-  }
 }
 
 .el-dialog.shareDialog .el-dialog__header {
