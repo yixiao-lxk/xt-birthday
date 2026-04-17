@@ -37,6 +37,10 @@ import html2canvas from 'html2canvas';
 import { getNickname,uploadImage } from "@/utils/api";
 import biliSharePc from "@bilibili/share-pc";
 
+// 按需引入 Element UI
+import { Dialog } from "element-ui";
+import "element-ui/lib/theme-chalk/dialog.css";
+
 
 export default {
   name: "ShareModal",
@@ -50,6 +54,9 @@ export default {
       nickname: "", //用户昵称
       activityId: "", //活动id
     };
+  },
+  components: {
+    [Dialog.name]: Dialog,
   },
   watch: {
   },
