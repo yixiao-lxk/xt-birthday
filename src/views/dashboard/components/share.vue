@@ -262,7 +262,10 @@ export default {
   bottom: -100px;
   left: 50%;
   transform: translateX(-50%);
-  width: 400px;
+  width: 440px;
+  /deep/ .el-bili-share-pc {
+    width: auto !important;
+  }
 }
 
 .el-dialog.shareDialog .el-dialog__header {
