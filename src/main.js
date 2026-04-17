@@ -13,7 +13,6 @@ import router from "./router";
 import store from "./store";
 import { Message, Dialog } from "element-ui";
 import 'element-ui/lib/theme-chalk/index.css';
-import 'element-ui/lib/theme-chalk/message.css';
 
 // 开发环境下引入mock
 // if (process.env.NODE_ENV === "development") {
