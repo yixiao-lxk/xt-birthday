@@ -28,12 +28,14 @@
         </div>
       </div>
     </div>
+    <div class="shareWrapper" ref="shareWrapperRef"></div>
   </el-dialog>
 </template>
 
 <script>
 import html2canvas from 'html2canvas';
 import { getNickname,uploadImage } from "@/utils/api";
+// import biliSharePc from "@bilibili/share-pc";
 
 
 export default {
@@ -64,6 +66,10 @@ export default {
     //关闭分享
     closeShare() {
       this.visible = false;
+      // 清空分享组件容器的DOM
+      if (this.$refs.shareWrapperRef) {
+        this.$refs.shareWrapperRef.innerHTML = "";
+      }
       this.isShare = false;
     },
     //生成图片
@@ -202,101 +208,22 @@ export default {
     //实际分享逻辑
     share(image_url) {
       console.log("share", image_url);
-      const { inBiliApp, isSupport, callNative } = window.biliBridge;
-      if (inBiliApp) {
-        isSupport("share.showShareMpcWindow").then((support) => {
-          if (support) {
-            callNative({
-              method: "share.showShareMpcWindow",
-              data: {
-                onShareCallbackId: "123",
-                // 自定义分享渠道和顺序
-                // 支持渠道参数：['generic'，'dynamic'，'weixin'，'weixin_monment'，'qq'，'sina'，'q_zone'，'copy']
-                shareChannelQueue: [
-                  "weixin",
-                  "q_zone",
-                  "weixin_monment",
-                  "dynamic",
-                ],
-                generic: {
-                  type: "image", // (必需，包含'text', 'image')
-                  title: "分享标题", // (必需)
-                  imageUrl: image_url, // (必需)
-                  text: "描述一下", // (必需)
-                },
-                dynamic: {
-                  title: "分享标题", // (必需)
-                  content_type: 2048, // (必需)
-                  cover_url: image_url, // (必需)
-                  description: "描述描述描述描述描述描述描述", // (必需)
-                  images: ["", "", ""], // (非必需)
-                  publish: false, // (非必需)
-                  edit_content: "动态预设文案", // (非必需)
-                  repost_code: 123, // (非必需)
-                  images_online: "", // (非必需)
-                },
-                weixin: {
-                  type: "image", // (必需, 包含'text', 'image', 'video', 'audio', 'web', 'min_program')
-                  title: "分享标题", // (必需)
-                  text: "描述一下", // (必需)
-                  url: "分享链接", // (必需) 如果是分享当前页面，可使用 window.location.href (注意是否带 query 参数)，或找站内对接人要到页面部署的线上地址
-                  imageUrl: image_url, // (type为image类型必需)
-                  program_id: "123", // (type为min_program类型必需，该id是小程序的原始id, 类似于gh_xxxxxxxx)
-                  program_path: "path", // (type为min_program类型必需)
-                  media_src: "多媒体地址", //(type为video audio类型必需)
-                },
-                weixin_monment: {
-                  type: "image", // (必需, 包含'text', 'image', 'video', 'audio', 'web')
-                  title: "分享标题", // (必需)
-                  text: "描述一下", // (必需)
-                  url: "分享链接", // (必需)
-                  imageUrl: image_url, // (type为image类型必需)
-                  media_src: "多媒体地址", // (type为video audio类型必需)
-                },
-                qq: {
-                  type: "image", // (必需, 包含'text', 'image', 'video', 'audio', 'web')
-                  title: "分享标题", // (必需)
-                  text: "描述一下", // (必需)
-                  url: "分享链接", // (必需)
-                  imageUrl: image_url, // (type为image类型必需)
-                  media_src: "多媒体地址", // (type为video audio类型必需)
-                },
-                sina: {
-                  type: "image", // (必需, 包含'text', 'image', 'video', 'audio', 'web')
-                  title: "分享标题", // (必需, 新版新浪客户端不会识别该参数, 但是分享组件里需要识别该参数，业务方可以传自己title或传'哔哩哔哩 (゜-゜)つロ 干杯~')
-                  text: "描述一下", // (必需)
-                  url: "分享链接", // (必需)
-                  imageUrl: image_url, // (type为image类型必需)
-                  media_src: "多媒体地址", // (type为video audio类型必需)
-                },
-                q_zone: {
-                  type: "image", // (必需, 包含'text', 'image', 'web')
-                  title: "分享标题", // (必需)
-                  text: "描述一下", // (必需)
-                  url: "分享链接", // (必需)
-                  imageUrl: image_url, // (type为image类型必需)
-                },
-                copy: {
-                  type: "image", // (必需, 包含'text', 'image', 'video', 'audio', 'web', copy渠道可以填写'text')
-                  title: "分享标题", // (必需)
-                  url: "", // (必需)
-                },
-                default: {
-                  type: "image", // (必需, 包含'text', 'image', 'video', 'audio', 'web')
-                  title: "分享标题", // (必需)
-                  text: "描述一下", // (必需)
-                  url: "分享链接", // (必需)
-                  imageUrl: image_url, // (type为image类型必需)
-                  media_src: "多媒体地址", // (type为video audio类型必需)
-                },
-              },
-              callback: () => {},
-            });
-          } else {
-            // not support
-          }
-        });
-      }
+      const pageInfo = window.__BILIACT_PAGEINFO__ || {};
+      const options = {
+        title: pageInfo.shareTitle || "星穹铁道生日会",
+        desc: pageInfo.shareText || "快来参与火花大作战！",
+        link: location.href,
+        pics: image_url,
+        // topic_id: pageInfo.topic_id || 1332371,
+        // topic_name: pageInfo.topic_name || "星穹铁道生日会",
+        topic_id: 1332371,
+        topic_name: "星穹铁道生日会",
+        // dynamic: {
+        //   image: image_url,
+        //   descPre: ""
+        // }
+      };
+      biliSharePc.share(options, this.$refs.shareWrapperRef);
     },
   },
 };
@@ -324,11 +251,20 @@ export default {
   margin: 0 !important;
 }
 
+.shareWrapper {
+  position: absolute;
+  bottom: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+}
+
 .el-dialog.shareDialog .el-dialog__header {
   display: none;
 }
 
 .el-dialog.shareDialog .el-dialog__body {
+  position: relative;
   padding: 0;
 }
 
