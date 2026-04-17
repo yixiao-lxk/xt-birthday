@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="shareWrapper" ref="shareWrapperRef"></div>
+    <div class="shareWrapper" id="shareWrapperRef" ref="shareWrapperRef"></div>
   </el-dialog>
 </template>
 
@@ -172,7 +172,6 @@ export default {
     //打开分享
     async openBilibiliShare() {
       const res = await this.uploadImage();
-      console.log(res);
       //调用分享方法
       this.share(res.image_url);
       // this.closeShare();
@@ -230,7 +229,7 @@ export default {
         //   descPre: ""
         // }
       };
-      biliSharePc.share(options, this.$refs.shareWrapperRef);
+      biliSharePc.share(options, document.getElementById('shareWrapperRef'));
     },
   },
 };
@@ -260,7 +259,7 @@ export default {
 
 .shareWrapper {
   position: absolute;
-  bottom: 65px;
+  bottom: -100px;
   left: 50%;
   transform: translateX(-50%);
   width: 400px;
