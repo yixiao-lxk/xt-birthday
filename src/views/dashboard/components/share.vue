@@ -23,7 +23,7 @@
           </div>
           <div class="shareBtnBox created" v-else>
             <img @click.stop="saveImg" src="@/assets/images/share/save.png" alt="保存图片">
-            <img @click="openBilibiliShare" src="@/assets/images/share/share.png" alt="分享">
+            <img @click.stop="openBilibiliShare" src="@/assets/images/share/share.png" alt="分享">
           </div>
         </div>
       </div>
@@ -229,7 +229,7 @@ export default {
         //   descPre: ""
         // }
       };
-      biliSharePc.share(options, document.getElementById('shareWrapperRef'));
+      biliSharePc.share(options, this.$refs.shareWrapperRef);
     },
   },
 };
@@ -257,17 +257,12 @@ export default {
   margin: 0 !important;
 }
 
-/deep/ .bili-share-pc {
-  background-color: #ffffff;
-  width: 440px;
-}
-
 .shareWrapper {
   position: absolute;
-  bottom: -100px;
+  bottom: 65px;
   left: 50%;
   transform: translateX(-50%);
-  width: 440px;
+  width: 400px;
 }
 
 .el-dialog.shareDialog .el-dialog__header {
