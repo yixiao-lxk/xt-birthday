@@ -211,7 +211,7 @@ export default {
       const pageInfo = window.__BILIACT_PAGEINFO__ || {};
       const options = {
         title: pageInfo.shareTitle || "星穹铁道生日会",
-        desc: pageInfo.shareText || "快来参与火花大作战！",
+        desc: pageInfo.shareText || "快来参与星穹铁道生日会活动吧！",
         link: location.href,
         pics: image_url,
         // topic_id: pageInfo.topic_id || 1332371,
