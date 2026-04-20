@@ -34,8 +34,9 @@ request.interceptors.response.use(
       return Promise.resolve(res.result);
     } else {
       // 处理错误情况
-      // Message.error(res.error_msg);
-      return Promise.reject(res);
+      Message.error(res.error_msg);
+      return Promise.reject(new Error(res.error_msg || "请求失败"));
+
     }
   },
   (error) => {
