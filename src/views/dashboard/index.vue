@@ -171,7 +171,44 @@ export default {
   },
 };
 </script>
-
+<style lang="less">
+  .el-message {
+    min-width: 380px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #EBEEF5;
+    position: fixed;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    background-color: #edf2fc;
+    transition: opacity .3s, transform .4s, top .4s;
+    overflow: hidden;
+    padding: 0 15px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+  }
+  .el-message--error {
+    background-color: #fef0f0;
+    border-color: #fde2e2;
+  }
+  .el-message--success {
+    background-color: #f0f9eb;
+    border-color: #e1f3d8;
+  }
+  .el-message__content {
+    font-size: 14px;
+  }
+  .el-message--success .el-message__content {
+    color: #67C23A; 
+  }
+  .el-message--error .el-message__content {
+    color: #F56C6C;
+  }
+</style>
 <style scoped lang="less">
 .container {
   width: 876px;
