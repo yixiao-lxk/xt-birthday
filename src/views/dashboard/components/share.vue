@@ -222,7 +222,7 @@ export default {
         pics: image_url,
         // topic_id: pageInfo.topic_id || 1332371,
         // topic_name: pageInfo.topic_name || "星穹铁道生日会",
-        topic_id: 1332371,
+        topic_id: 1177780,
         topic_name: "星穹铁道生日会",
         // dynamic: {
         //   image: image_url,
